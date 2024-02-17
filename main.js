@@ -60,6 +60,35 @@ async function compareData(result, previousDataJson) {
     return newResults;
 }
 
+const corn = require('node-cron');
+const corn2 = require('node-cron');
+
+
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
+    corn.schedule('*/5 * * * *', async () => {
+        const result = await getResults();
+        const previousData = fs.readFileSync('localData.json', 'utf8');
+        const previousDataJson = JSON.parse(previousData);
+        const resdata = await compareData(result, previousDataJson);
+        if (resdata.length === 0) {
+            //sendMessageToTelegram(result[0].name);
+        }
+        else {
+            const lengthresdata = resdata.length;
+            for (let i = 0; i < lengthresdata; i++) {
+                sendMessageToTelegram(resdata[i].name);
+            }
+        }
+    });
+    corn2.schedule('0 0 * * *', async () => {
+        const result = await getResults();
+        const previousData = fs.readFileSync('localData.json', 'utf8');
+        const previousDataJson = JSON.parse(previousData);
+        const resdata = await compareData(result, previousDataJson);
+        if (resdata.length === 0) {
+            sendMessageToTelegram("No new results");
+        }
+    });
+    
 });
