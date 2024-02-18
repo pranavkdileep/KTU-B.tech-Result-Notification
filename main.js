@@ -3,6 +3,8 @@ const axios = require('axios');
 const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
+const sendWhatsapp = require('./send_whatsapp');
+const makeCall = require('./make_call');
 
 const app = express();
 
@@ -66,7 +68,7 @@ const corn2 = require('node-cron');
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
-    corn.schedule('*/5 * * * *', async () => {
+    corn.schedule('*/1 * * * *', async () => {
         const result = await getResults();
         const previousData = fs.readFileSync('localData.json', 'utf8');
         const previousDataJson = JSON.parse(previousData);
@@ -76,8 +78,10 @@ app.listen(3000, () => {
         }
         else {
             const lengthresdata = resdata.length;
+            makeCall();
             for (let i = 0; i < lengthresdata; i++) {
                 sendMessageToTelegram(resdata[i].name);
+                sendWhatsapp(resdata[i].name);
             }
         }
     });
