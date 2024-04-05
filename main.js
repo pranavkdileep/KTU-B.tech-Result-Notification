@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+
 const fs = require('fs');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -64,6 +65,7 @@ async function compareData(result, previousDataJson) {
 
 const corn = require('node-cron');
 const corn2 = require('node-cron');
+const { json } = require('express/lib/response');
 
 const sendResults = async (examDefId,schemeId) => {
     // const responce = await fetch("https://api.ktu.edu.in/ktu-web-service/anon/individualresult", {
@@ -83,7 +85,7 @@ const sendResults = async (examDefId,schemeId) => {
     //   });
     const response = await axios.get('https://kturesult.pranavkd.workers.dev/getResult?examDefId='+examDefId+'&schemeId='+schemeId);
     const data = response.data;
-    sendMessageToTelegram(json.stringify(data));
+    sendMessageToTelegram(JSON.stringify(data));
 }
 
 
