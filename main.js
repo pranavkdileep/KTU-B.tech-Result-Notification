@@ -70,16 +70,16 @@ const sendResults = async (examDefId,schemeId) => {
         "headers": {
           "accept": "application/json, text/plain, */*",
           "content-type": "application/json",
-          "sec-ch-ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
-          "sec-ch-ua-mobile": "?0",
-          "sec-ch-ua-platform": "\"Linux\""
+        //   "sec-ch-ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
+        //   "sec-ch-ua-mobile": "?0",
+        //   "sec-ch-ua-platform": "\"Linux\""
         },
-        "referrer": "https://ktu.edu.in/",
+        // "referrer": "https://ktu.edu.in/",
         "referrerPolicy": "strict-origin-when-cross-origin",
         "body": `{\"registerNo\":\"UCE22CYS027\",\"dateOfBirth\":\"2005-02-16\",\"examDefId\":${examDefId},\"schemeId\":${schemeId}}`,
         "method": "POST",
-        "mode": "cors",
-        "credentials": "omit"
+        // "mode": "cors",
+        // "credentials": "omit"
       });
         const data = await responce.json();
         sendMessageToTelegram(data);
