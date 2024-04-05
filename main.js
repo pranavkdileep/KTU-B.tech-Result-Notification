@@ -80,7 +80,7 @@ app.listen(3000, () => {
             const lengthresdata = resdata.length;
             makeCall();
             for (let i = 0; i < lengthresdata; i++) {
-                sendMessageToTelegram(resdata[i].name);
+                sendMessageToTelegram(resdata[i].examDefId);
                 sendWhatsapp(resdata[i].name);
             }
         }
