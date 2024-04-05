@@ -65,6 +65,26 @@ async function compareData(result, previousDataJson) {
 const corn = require('node-cron');
 const corn2 = require('node-cron');
 
+const sendResults = async (examDefId,schemeId) => {
+    const responce = await fetch("https://api.ktu.edu.in/ktu-web-service/anon/individualresult", {
+        "headers": {
+          "accept": "application/json, text/plain, */*",
+          "content-type": "application/json",
+          "sec-ch-ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": "\"Linux\""
+        },
+        "referrer": "https://ktu.edu.in/",
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "body": `{\"registerNo\":\"UCE22CYS027\",\"dateOfBirth\":\"2005-02-16\",\"examDefId\":${examDefId},\"schemeId\":${schemeId}}`,
+        "method": "POST",
+        "mode": "cors",
+        "credentials": "omit"
+      });
+        const data = await responce.json();
+        sendMessageToTelegram(data);
+}
+
 
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
@@ -80,7 +100,7 @@ app.listen(3000, () => {
             const lengthresdata = resdata.length;
             makeCall();
             for (let i = 0; i < lengthresdata; i++) {
-                sendMessageToTelegram(resdata[i].examDefId);
+                sendMessageToTelegram(resdata[i].name);
                 sendWhatsapp(resdata[i].name);
             }
         }
