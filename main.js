@@ -101,7 +101,7 @@ app.listen(3000, () => {
         }
         else {
             const lengthresdata = resdata.length;
-            makeCall();
+            //makeCall();
             for (let i = 0; i < lengthresdata; i++) {
                 sendMessageToTelegram(resdata[i].name);
                 if(resdata[i].name.includes("S3"))
