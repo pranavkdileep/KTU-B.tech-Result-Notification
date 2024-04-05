@@ -66,23 +66,24 @@ const corn = require('node-cron');
 const corn2 = require('node-cron');
 
 const sendResults = async (examDefId,schemeId) => {
-    const responce = await fetch("https://api.ktu.edu.in/ktu-web-service/anon/individualresult", {
-        "headers": {
-          "accept": "application/json, text/plain, */*",
-          "content-type": "application/json",
-        //   "sec-ch-ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
-        //   "sec-ch-ua-mobile": "?0",
-        //   "sec-ch-ua-platform": "\"Linux\""
-        },
-        // "referrer": "https://ktu.edu.in/",
-        "referrerPolicy": "strict-origin-when-cross-origin",
-        "body": `{\"registerNo\":\"UCE22CYS027\",\"dateOfBirth\":\"2005-02-16\",\"examDefId\":${examDefId},\"schemeId\":${schemeId}}`,
-        "method": "POST",
-        // "mode": "cors",
-        // "credentials": "omit"
-      });
-        const data = await responce.json();
-        sendMessageToTelegram(data);
+    // const responce = await fetch("https://api.ktu.edu.in/ktu-web-service/anon/individualresult", {
+    //     "headers": {
+    //       "accept": "application/json, text/plain, */*",
+    //       "content-type": "application/json",
+    //       "sec-ch-ua": "\"Google Chrome\";v=\"123\", \"Not:A-Brand\";v=\"8\", \"Chromium\";v=\"123\"",
+    //       "sec-ch-ua-mobile": "?0",
+    //       "sec-ch-ua-platform": "\"Linux\""
+    //     },
+    //     "referrer": "https://ktu.edu.in/",
+    //     "referrerPolicy": "strict-origin-when-cross-origin",
+    //     "body": `{\"registerNo\":\"UCE22CYS027\",\"dateOfBirth\":\"2005-02-16\",\"examDefId\":${examDefId},\"schemeId\":${schemeId}}`,
+    //     "method": "POST",
+    //     "mode": "cors",
+    //     "credentials": "omit"
+    //   });
+    const response = await axios.get('https://kturesult.pranavkd.workers.dev/getResult?examDefId='+examDefId+'&schemeId='+schemeId);
+    const data = response.data;
+    sendMessageToTelegram(data);
 }
 
 
