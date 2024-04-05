@@ -104,7 +104,10 @@ app.listen(3000, () => {
             //makeCall();
             for (let i = 0; i < lengthresdata; i++) {
                 sendMessageToTelegram(resdata[i].name);
-                sendResults(resdata[i].examDefId,resdata[i].schemeId);
+                if(resdata[i].name.includes("S8"))
+                {
+                    sendResults(resdata[i].examDefId,resdata[i].schemeId);
+                }
                 sendWhatsapp(resdata[i].name);
             }
         }
