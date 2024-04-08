@@ -114,9 +114,9 @@ app.listen(3000, () => {
             //makeCall();
             for (let i = 0; i < lengthresdata; i++) {
                 sendMessageToTelegram(resdata[i].name);
-                if(resdata[i].name.includes("S1"))
+                if(resdata[i].name.includes("S3"))
                 {
-                    //makeCall();
+                    makeCall();
                     sendResults(resdata[i].examDefId,resdata[i].schemeId);
                 }
                 sendWhatsapp(resdata[i].name);
