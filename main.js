@@ -70,9 +70,9 @@ const { json } = require('express/lib/response');
 
 
 const scrapRes = async (data) => {
-    for (let i = 0; i < data.resultDetails.length; i++) {
+    for (let i = 0; i < data.length; i++) {
         //console.log(data.resultDetails[i].courseName + " " + data.resultDetails[i].grade);
-        sendMessageToTelegram(data.resultDetails[i].courseName + " " + data.resultDetails[i].grade);
+        sendMessageToTelegram(data[i].courseName + " " + data[i].grade);
     }
 };
 
@@ -95,7 +95,7 @@ const sendResults = async (examDefId,schemeId) => {
     const response = await axios.get('https://kturesult.pranavkd.workers.dev/getResult?examDefId='+examDefId+'&schemeId='+schemeId);
     const data = response.data;
     sendMessageToTelegram(JSON.stringify(data));
-    scrapRes(data);
+    scrapRes(data.resultDetails);
 }
 
 
@@ -114,7 +114,7 @@ app.listen(3000, () => {
             //makeCall();
             for (let i = 0; i < lengthresdata; i++) {
                 sendMessageToTelegram(resdata[i].name);
-                if(resdata[i].name.includes("S3"))
+                if(resdata[i].name.includes("S1"))
                 {
                     makeCall();
                     sendResults(resdata[i].examDefId,resdata[i].schemeId);
