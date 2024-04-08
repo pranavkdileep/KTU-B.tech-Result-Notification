@@ -94,7 +94,7 @@ const sendResults = async (examDefId,schemeId) => {
     //   });
     const response = await axios.get('https://kturesult.pranavkd.workers.dev/getResult?examDefId='+examDefId+'&schemeId='+schemeId);
     const data = response.data;
-    sendMessageToTelegram(JSON.stringify(data));
+    //sendMessageToTelegram(JSON.stringify(data));
     scrapRes(data.resultDetails);
 }
 
