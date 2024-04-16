@@ -11,6 +11,8 @@ dotenv.config();
 
 const makeCall = require('./make_call');
 
+let lastupdatetime = new Date();
+
 
 const pass = env.PASS;
 let finalMmessage = 'The Current Result is : \n';
@@ -113,7 +115,7 @@ async function UpdateResultLinks()
     for (const { name, link } of reasultLinks) {
         if(name != null && link != null)
         {
-            if(name.includes('S2'))
+            if(name.includes('S3'))
             {
                 try{makeCall();}catch(error){}
                 
@@ -126,10 +128,10 @@ async function UpdateResultLinks()
             await page.screenshot({ path: name + '.png'});
             let inmagelink = await upload(name);
             finalMmessage += name + ' : ' + inmagelink + '\n';
-            
-
+            lastupdatetime = new Date();
         }
     }  
+    finalMmessage += '\nLast Updated at : ' + lastupdatetime + '\n';
     await updateMessage(finalMmessage); 
     await page.screenshot({ path: 'screenshot.png' });
     await browser.close();
@@ -155,8 +157,16 @@ app.get('/', (req, res) => {
 
 });
 
+nodeCorn = require('node-cron');
+
 app.listen(port, () => {
     console.log(`app listening at http://localhost:${port}`);
+    nodeCorn.schedule('0 5 * * *', () => {
+        getResponce().then((message) => {
+            console.log(message);
+            finalMmessage = 'The Current Result is : \n';
+        });
+    });
 });
 
 
