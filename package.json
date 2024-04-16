@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "start": "node ktulogin.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.7",
+    "axios": "^1.6.8",
     "dotenv": "^16.4.4",
-    "express": "^4.18.2",
+    "express": "^4.19.2",
     "node-cron": "^3.0.3",
+    "puppeteer": "^22.6.5",
     "twilio": "^4.22.0"
   }
 }
