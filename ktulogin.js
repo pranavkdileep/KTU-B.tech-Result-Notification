@@ -78,6 +78,7 @@ async function upload(name)
 
 async function UpdateResultLinks()
 {
+    try{
     // const browser = await pupeeteer.launch({
     //     executablePath: '/usr/bin/google-chrome',
     //     headless: 'new',
@@ -115,7 +116,7 @@ async function UpdateResultLinks()
     for (const { name, link } of reasultLinks) {
         if(name != null && link != null)
         {
-            if(name.includes('S3'))
+            if(name.includes('S2'))
             {
                 try{makeCall();}catch(error){}
                 
@@ -128,7 +129,7 @@ async function UpdateResultLinks()
             await page.screenshot({ path: name + '.png'});
             let inmagelink = await upload(name);
             finalMmessage += name + ' : ' + inmagelink + '\n';
-            lastupdatetime = new Date();
+            lastupdatetime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
         }
     }  
     finalMmessage += '\nLast Updated at : ' + lastupdatetime + '\n';
@@ -136,8 +137,11 @@ async function UpdateResultLinks()
     await page.screenshot({ path: 'screenshot.png' });
     await browser.close();
     return finalMmessage;   
-
-
+}
+catch (error) {
+    console.error(error);
+    return 'Error Occured';
+}
     
 }
 
@@ -161,7 +165,7 @@ nodeCorn = require('node-cron');
 
 app.listen(port, () => {
     console.log(`app listening at http://localhost:${port}`);
-    nodeCorn.schedule('0 5 * * *', () => {
+    nodeCorn.schedule('*/6 * * * *', () => {
         getResponce().then((message) => {
             console.log(message);
             finalMmessage = 'The Current Result is : \n';
