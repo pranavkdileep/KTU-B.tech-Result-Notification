@@ -116,7 +116,7 @@ async function UpdateResultLinks()
     for (const { name, link } of reasultLinks) {
         if(name != null && link != null)
         {
-            if(name.includes('S2'))
+            if(name.includes('S3'))
             {
                 try{makeCall();}catch(error){}
                 
