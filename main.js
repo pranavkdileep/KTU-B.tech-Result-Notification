@@ -70,10 +70,12 @@ const { json } = require('express/lib/response');
 
 
 const scrapRes = async (data) => {
+try{
     for (let i = 0; i < data.length; i++) {
         //console.log(data.resultDetails[i].courseName + " " + data.resultDetails[i].grade);
         sendMessageToTelegram(data[i].courseName + " " + data[i].grade);
     }
+} catch (error){}
 };
 
 const sendResults = async (examDefId,schemeId) => {
